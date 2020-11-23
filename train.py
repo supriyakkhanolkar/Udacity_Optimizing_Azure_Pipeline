@@ -51,13 +51,14 @@ def clean_data(data):
 from azureml.core import Workspace, Dataset
 
 print("Getting existing workspace")
-ws = Workspace.from_config()
+ws = Workspace.from_config(path='.azureml/')
 
 print("Getting datastore")
 datastore = ws.get_default_datastore()
 
 print("Creating dataset")
-ds = Dataset.Tabular.from_delimited_files(path = [(datastore, "https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv")])
+#ds = Dataset.Tabular.from_delimited_files(path = [(datastore, "https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv")])
+ds = Dataset.Tabular.from_delimited_files(path="https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv")
 ds.to_pandas_dataframe()
 
 print("Calling clean_data()")
@@ -87,7 +88,12 @@ def main():
     run.log("Max iterations:", np.int(args.max_iter))
 
     print("Calling LogisticRegression")
-    model = LogisticRegression(C=args.C, max_iter=args.max_iter).fit(x_train, y_train)
+    print("Regularization Strength:", np.float(args.C))
+    print("Max iterations:", np.int(args.max_iter))
+    #model = LogisticRegression(C=args.C, max_iter=args.max_iter).fit(x_train, y_train)
+    model = LogisticRegression(C=np.float(args.C), max_iter=np.int(args.max_iter)).fit(x_train, y_train)
+
+    print("Calling scoring function")
 
     accuracy = model.score(x_test, y_test)
     run.log("Accuracy", np.float(accuracy))
