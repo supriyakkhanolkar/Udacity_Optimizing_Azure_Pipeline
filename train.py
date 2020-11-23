@@ -69,7 +69,8 @@ x, y = clean_data(ds)
 ### YOUR CODE HERE ###a
 print("splitting data")
 
-x_train, y_train, x_test, y_test = train_test_split(x,y,test_size=0.33,random_state=0)
+#x_train, y_train, x_test, y_test = train_test_split(x,y,test_size=0.33,random_state=0)
+x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.33,random_state=0)
 
 print("getting run object")
 run = Run.get_context()
@@ -100,8 +101,8 @@ def main():
     print("Accuracy is {}".format(accuracy))
     
     # Store model
-    os.makedirs('output', exist_ok=True)
-    joblib.dump(value=model, filename='output/model.pkl')
+    os.makedirs('outputs', exist_ok=True)
+    joblib.dump(model, 'outputs/model.joblib')
     
 if __name__ == '__main__':
     main()
