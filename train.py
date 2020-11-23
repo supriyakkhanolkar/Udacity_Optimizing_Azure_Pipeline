@@ -92,5 +92,10 @@ def main():
     accuracy = model.score(x_test, y_test)
     run.log("Accuracy", np.float(accuracy))
     print("Accuracy is {}".format(accuracy))
+    
+    # Store model
+    os.makedirs('output', exist_ok=True)
+    joblib.dump(value=model, filename='output/model.pkl')
+    
 if __name__ == '__main__':
     main()
