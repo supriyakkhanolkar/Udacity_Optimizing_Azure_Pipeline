@@ -50,11 +50,17 @@ def clean_data(data):
 
 from azureml.core import Workspace, Dataset
 
+print("getting run object")
+run = Run.get_context()
+'''
 print("Getting existing workspace")
-ws = Workspace.from_config(path='.azureml/')
+#ws = Workspace.from_config(path='.azureml/')
+ws = run.experiment.workspace
 
 print("Getting datastore")
 datastore = ws.get_default_datastore()
+
+'''
 
 print("Creating dataset")
 #ds = Dataset.Tabular.from_delimited_files(path = [(datastore, "https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv")])
@@ -71,10 +77,10 @@ print("splitting data")
 
 #x_train, y_train, x_test, y_test = train_test_split(x,y,test_size=0.33,random_state=0)
 x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.33,random_state=0)
-
+'''
 print("getting run object")
 run = Run.get_context()
-
+'''
 
 def main():
     # Add arguments to script
